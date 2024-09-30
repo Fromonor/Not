@@ -1,0 +1,161 @@
+local tool = game.Players.LocalPlayer.Backpack:WaitForChild("Ravage")
+_G.hasRun = _G.hasRun or false
+local debounce = false  -- Debounce flag to prevent spamming
+
+-- Pre-load the scripts into variables
+local doScriptContent = game:HttpGet("https://raw.githubusercontent.com/Fromonor/Not/refs/heads/main/Do")
+local bbScriptContent = game:HttpGet("https://pastebin.com/raw/bbLpvYH7")
+local dam = game:HttpGet("https://pastebin.com/raw/5WSzha14")
+local anc = game:HttpGet("https://pastebin.com/raw/X2N70CxD")
+
+tool.Activated:Connect(function()
+    if not debounce and not _G.hasRun then
+        debounce = true  -- Activate debounce
+        _G.hasRun = true  -- Mark hasRun as true to prevent re-running the script
+
+        local ToolNumber = 1
+        local cooldownTime = 18
+
+        -- Get the player and the GUI elements
+        local player = game.Players.LocalPlayer
+        local playerGui = player:WaitForChild("PlayerGui")
+        local hotbar = playerGui:WaitForChild("Hotbar")
+        local backpack = hotbar:WaitForChild("Backpack")
+        local localScript = backpack:WaitForChild("LocalScript")
+
+        -- Get the Cooldown from the LocalScript
+        local cooldown = localScript:WaitForChild("Cooldown")
+
+        -- Clone the Cooldown object
+        local clonedCooldown = cooldown:Clone()
+
+        -- Get the destination path where the cloned object will be moved
+        local hotbarSlot1 = hotbar:WaitForChild("Backpack"):WaitForChild("Hotbar"):WaitForChild(ToolNumber):WaitForChild("Base")
+
+        -- Move the cloned Cooldown to the desired location
+        clonedCooldown.Parent = hotbarSlot1
+        clonedCooldown.BackgroundColor3 = Color3.fromRGB(70, 166, 255)
+
+        local startSize = clonedCooldown.Size
+        local endSize = UDim2.new(startSize.X.Scale, startSize.X.Offset, 0, 0) -- Fully hidden (height is zero)
+
+        -- Animate the cooldown to resize downwards
+        spawn(function()
+            local startTime = tick()
+            local initialSize = clonedCooldown.Size
+
+            while tick() - startTime < cooldownTime do
+                local elapsed = tick() - startTime
+                local progress = elapsed / cooldownTime
+
+                -- Calculate the new size based on progress
+                local newSize = UDim2.new(
+                    initialSize.X.Scale, -- Keep X size the same
+                    initialSize.X.Offset,
+                    initialSize.Y.Scale * (1 - progress), -- Decrease height
+                    initialSize.Y.Offset * (1 - progress)
+                )
+
+                -- Update the Cooldown's size
+                clonedCooldown.Size = newSize
+
+                wait()
+            end
+
+            -- Ensure final size is set and destroy the cooldown
+            clonedCooldown.Size = endSize
+            clonedCooldown:Destroy()
+        end)
+
+        -- Proximity and action logic
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+        -- Function to execute based on proximity and player's direction
+        local function executeBasedOnProximityAndDirection()
+            -- Get all player characters in the "Live" folder
+            local liveFolder = game.Workspace:FindFirstChild("Live")
+            if not liveFolder then
+                warn("Live folder not found in Workspace.")
+                return
+            end
+
+            -- Iterate over each model in the Live folder
+            for _, model in ipairs(liveFolder:GetChildren()) do
+                if model:IsA("Model") and model:FindFirstChild("HumanoidRootPart") and model ~= character then
+                    local targetHumanoidRootPart = model:FindFirstChild("HumanoidRootPart")
+                    local distance = (humanoidRootPart.Position - targetHumanoidRootPart.Position).Magnitude
+
+                    -- Check if the player is within 6 studs of the target model
+                    if distance <= 6 then
+                        -- Calculate if the player is looking at the target model
+                        local lookVector = humanoidRootPart.CFrame.LookVector
+                        local targetDirection = (targetHumanoidRootPart.Position - humanoidRootPart.Position).Unit
+                        local dotProduct = lookVector:Dot(targetDirection)
+                        local angle = math.acos(dotProduct)
+
+                        -- If the angle is less than 45 degrees (0.785 radians)
+                        if angle < math.rad(45) then
+                            -- Player is close and looking at the target, execute the "Do" script
+                            task.spawn(function()
+                                loadstring(anc)()
+                                loadstring(doScriptContent)()
+                                loadstring(dam)()
+                            end)
+
+                            -- Wait and then make the target model play the specified animation
+                            task.spawn(function()
+                                wait(1.1)
+                                local targetHumanoid = model:FindFirstChildOfClass("Humanoid")
+                                if targetHumanoid then
+                                    local anim = Instance.new("Animation")
+                                    anim.AnimationId = "rbxassetid://16945557433"
+                                    local playAnim = targetHumanoid:LoadAnimation(anim)
+                                    playAnim:Play()
+                                    targetHumanoidRootPart.Anchored = true
+                                    task.delay(7, function()
+                                        targetHumanoidRootPart.Anchored = false
+                                    end)
+                                end
+                            end)
+
+                            -- Teleport the target model in front of the player
+                            local function teleportModelInFront()
+                                local characterPosition = humanoidRootPart.Position
+                                local characterLookVector = humanoidRootPart.CFrame.LookVector
+                                local teleportPosition = characterPosition + characterLookVector * 3 -- 3 studs in front of the player
+
+                                -- Move the target model to the calculated position
+                                model:SetPrimaryPartCFrame(CFrame.new(teleportPosition, characterPosition))
+                            end
+                            wait(1.1)
+                            teleportModelInFront()
+                        else
+                          if not angle < math.rad(45) then
+                            task.spawn(function()
+                                loadstring(bbScriptContent)()
+                            end)
+                        end
+                        end
+
+                        -- Check if target humanoid is dead
+                        local targetHumanoid = model:FindFirstChildOfClass("Humanoid")
+                        if targetHumanoid and targetHumanoid.Health == 0 then
+                            task.spawn(function()
+                                loadstring(bbScriptContent)()
+                            end)
+                        end
+                    end
+                end
+            end
+        end
+
+        -- Trigger the function
+        executeBasedOnProximityAndDirection()  -- This will run once when called
+
+        -- Wait for cooldown before resetting the flag
+        task.wait(cooldownTime)
+        _G.hasRun = false  -- Reset hasRun after cooldown
+        debounce = false  -- Reset debounce after cooldown
+    end
+end)
