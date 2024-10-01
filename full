@@ -3,7 +3,11 @@ _G.hasRun = _G.hasRun or false
 local debounce = false  -- Debounce flag to prevent spamming
 
 local function bbScriptContent()
-    task.spawn(function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    task.delay(1.3, function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+    end
+task.spawn(function()
 local player = game.Players.LocalPlayer
 repeat wait() until player.Character.Humanoid
 local humanoid = player.Character.Humanoid
