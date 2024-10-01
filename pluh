@@ -461,3 +461,5 @@ end
 Script()
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+end
+end
