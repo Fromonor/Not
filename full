@@ -3,12 +3,8 @@ _G.hasRun = _G.hasRun or false
 local debounce = false  -- Debounce flag to prevent spamming
 
 local function bbScriptContent()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-    task.delay(1.3, function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-    end
-task.spawn(function()
-local player = game.Players.LocalPlayer
+    task.spawn(function()
+    local player = game.Players.LocalPlayer
 repeat wait() until player.Character.Humanoid
 local humanoid = player.Character.Humanoid
 local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
@@ -26,33 +22,61 @@ end)
 
 playAnim:Play()
 playAnim:AdjustSpeed(1)
-wait(0.3)
-playAnim:AdjustSpeed(1)
 
 local Players = game:GetService("Players")
 local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
 
-local animationPlayed = false -- Flag to track if the animation has already been played
+local animationPlayed = false
 end)
+
 task.spawn(function()
-local soundId = "rbxassetid://16945495411"
+    local soundId = "rbxassetid://16945495411"
 
--- Create and configure the sound
-local sound = Instance.new("Sound")
-sound.SoundId = soundId
-sound.Volume = 2
-sound.Parent = game.Workspace  -- Parent the sound to the Workspace
+    -- Create and configure the sound
+    local sound = Instance.new("Sound")
+    sound.SoundId = soundId
+    sound.Volume = 2
+    sound.Parent = game.Workspace  -- Parent the sound to the Workspace
 
--- Function to adjust the playback speed to extend the duration
-local function extendDuration(sound, targetDuration)
-    local currentDuration = sound.TimeLength
-    local speedFactor = currentDuration / targetDuration
-    sound.PlaybackSpeed = speedFactor
+    -- Function to adjust the playback speed to extend the duration
+    local function extendDuration(sound, targetDuration)
+        local currentDuration = sound.TimeLength
+        local speedFactor = currentDuration / targetDuration
+        sound.PlaybackSpeed = speedFactor
+    end
+
+    -- Play the sound
+    sound:Play()
+end)
+
+-- Anchoring character
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+task.delay(1.2, function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+end)
+
+-- Animation detection
+local Original = "rbxassetid://7815618175"  -- The animation ID you're detecting
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local detectionActive = true  -- Flag to control detection
+
+local function onAnimationPlayed(animationTrack)
+    -- Check if detection is active and the animation ID matches
+    if detectionActive and animationTrack.Animation.AnimationId == Original then
+        -- Stop the detected animation
+        animationTrack:Stop()
+
+        -- Disable further detection after 7 seconds (if intended)
+        task.delay(1, function()
+            detectionActive = false
+        end)
+    end
 end
 
--- Play the sound
-sound:Play()
-end)
+-- Connect the function to humanoid's AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 end
 
 local doScriptContent = game:HttpGet("https://raw.githubusercontent.com/Fromonor/Not/refs/heads/main/Do")
