@@ -5,8 +5,8 @@ local debounce = false  -- Debounce flag to prevent spamming
 -- Pre-load the scripts into variables
 local doScriptContent = game:HttpGet("https://raw.githubusercontent.com/Fromonor/Not/refs/heads/main/Do")
 local bbScriptContent = game:HttpGet("https://pastebin.com/raw/bbLpvYH7")
-local dam = game:HttpGet("https://pastebin.com/raw/5WSzha14")
 local anc = game:HttpGet("https://pastebin.com/raw/X2N70CxD")
+local dam = game:HttpGet("https://pastebin.com/raw/5WSzha14")
 
 tool.Activated:Connect(function()
     if not debounce and not _G.hasRun then
@@ -73,28 +73,24 @@ tool.Activated:Connect(function()
 
         -- Function to execute based on proximity and player's direction
         local function executeBasedOnProximityAndDirection()
-            -- Get all player characters in the "Live" folder
             local liveFolder = game.Workspace:FindFirstChild("Live")
             if not liveFolder then
                 warn("Live folder not found in Workspace.")
                 return
             end
 
-            -- Iterate over each model in the Live folder
             for _, model in ipairs(liveFolder:GetChildren()) do
                 if model:IsA("Model") and model:FindFirstChild("HumanoidRootPart") and model ~= character then
                     local targetHumanoidRootPart = model:FindFirstChild("HumanoidRootPart")
                     local distance = (humanoidRootPart.Position - targetHumanoidRootPart.Position).Magnitude
 
-                    -- Check if the player is within 6 studs of the target model
+                    -- Check if the distance is within 6 studs
                     if distance <= 6 then
-                        -- Calculate if the player is looking at the target model
                         local lookVector = humanoidRootPart.CFrame.LookVector
                         local targetDirection = (targetHumanoidRootPart.Position - humanoidRootPart.Position).Unit
                         local dotProduct = lookVector:Dot(targetDirection)
                         local angle = math.acos(dotProduct)
 
-                        -- If the angle is less than 45 degrees (0.785 radians)
                         if angle < math.rad(45) then
                             -- Player is close and looking at the target, execute the "Do" script
                             task.spawn(function()
@@ -125,26 +121,29 @@ tool.Activated:Connect(function()
                                 local characterLookVector = humanoidRootPart.CFrame.LookVector
                                 local teleportPosition = characterPosition + characterLookVector * 3 -- 3 studs in front of the player
 
-                                -- Move the target model to the calculated position
                                 model:SetPrimaryPartCFrame(CFrame.new(teleportPosition, characterPosition))
                             end
                             wait(1.1)
                             teleportModelInFront()
                         else
-                          if not angle < math.rad(45) then
+                            -- Player is close but looking away, run the bb script
                             task.spawn(function()
                                 loadstring(bbScriptContent)()
                             end)
                         end
-                        end
+                    elseif distance > 6 then
+                        -- If the player is more than 6 studs away, run the bb script
+                        task.spawn(function()
+                            loadstring(bbScriptContent)()
+                        end)
+                    end
 
-                        -- Check if target humanoid is dead
-                        local targetHumanoid = model:FindFirstChildOfClass("Humanoid")
-                        if targetHumanoid and targetHumanoid.Health == 0 then
-                            task.spawn(function()
-                                loadstring(bbScriptContent)()
-                            end)
-                        end
+                    -- Check if target humanoid is dead
+                    local targetHumanoid = model:FindFirstChildOfClass("Humanoid")
+                    if targetHumanoid and targetHumanoid.Health == 0 then
+                        task.spawn(function()
+                            loadstring(bbScriptContent)()
+                        end)
                     end
                 end
             end
