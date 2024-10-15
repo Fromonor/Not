@@ -4,7 +4,7 @@ local m2 = 10469630950
 local m3 = 10469639222
 local m4 = 10469643643
 
-local MovesetName1 = "Normal"
+local MovesetName1 = "Norml"
 local MovesetName2 = "Consecutive Punches"
 local MovesetName3 = "Shove"
 local MovesetName4 = "Uppercut"
