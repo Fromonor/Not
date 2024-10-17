@@ -221,6 +221,10 @@ end
 wait(1.1)
 sound:Play()
 wait(5.44)
+local s = Instance.new("Sound", game.Players.LocalPlayer.Character.HumanoidRootPart)
+s.SoundId = "rbxassetid://16945723339"
+s.Volume = 2
+s:Play()
 end)
 task.spawn(function()
 task.spawn(function()
