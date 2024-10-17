@@ -335,7 +335,7 @@ local function playBarrageEffect(player)
     local final1 = ReplicatedStorage.Resources.KJEffects["BARRAGESMOKE"]["BARRAGESMOKE"]:Clone()
     final1.Parent = player.Character.HumanoidRootPart
 
-    local iterations = 0.8 / 0.2 -- Total duration (1.4 seconds) divided by interval (0.2 seconds)
+    local iterations = 0.95 / 0.2 -- Total duration (1.4 seconds) divided by interval (0.2 seconds)
     local currentIteration = 0
 
     -- Emit smoke particles every 0.2 seconds
