@@ -43,7 +43,7 @@ task.delay(7, function()
      game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 end)
             -- Delay for 3 seconds, then revert the image back
-            task.delay(7, function()
+            wait(7)
                 if iconImage.Image == "rbxassetid://12343172715" then
                     iconImage.Image = "rbxassetid://12343172777"
    
@@ -56,7 +56,6 @@ end)
             }
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
             end
-            end)
 
             -- Break the loop once the image has been changed
             break
@@ -78,7 +77,7 @@ local function onAnimationPlayed(animationTrack)
         animationTrack:Stop()
 
         -- Disable further detection after 7 seconds
-        task.delay(7, function()
+        task.delay(0.1, function()
         detectionActive = false
         end)
     end
