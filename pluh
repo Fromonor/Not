@@ -162,20 +162,11 @@ end)
 task.spawn(function()
 wait(0.2)
 local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
-local teleportDistance = 0.3 -- The distance to teleport forward each step
-local teleportInterval = 0 -- Time interval between each teleport (in seconds)
-local totalDuration = 1.47 -- Total duration of the teleportation (in seconds)
-
-local timeElapsed = 0
-local startTime = tick() -- Record the start time
-
-while timeElapsed < totalDuration do
-    humanoidRootPart.CFrame = humanoidRootPart.CFrame * CFrame.new(0, 0, -teleportDistance)
-    wait(teleportInterval)
-    timeElapsed = tick() - startTime -- Update the elapsed time
+local s = tick()
+while tick() - s < 1.47 do
+local h = game.Players.LocalPlayer.Character.HumanoidRootPart
+h.CFrame = h.CFrame * CFrame.new(0, 0, -0.2)
+wait()
 end
 end)
 local Players = game:GetService("Players")
