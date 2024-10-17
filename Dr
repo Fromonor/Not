@@ -78,7 +78,7 @@ local function onAnimationPlayed(animationTrack)
         animationTrack:Stop()
 
         -- Disable further detection after 7 seconds
-        task.delay(1, function()
+        task.delay(5, function()
         detectionActive = false
         end)
     end
