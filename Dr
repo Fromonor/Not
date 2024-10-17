@@ -56,6 +56,7 @@ end)
             }
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
             end
+            end)
 
             -- Break the loop once the image has been changed
             break
