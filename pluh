@@ -27,25 +27,7 @@ if Backpack:FindFirstChild("Stoic Bomb") and Backpack:FindFirstChild("20-20-20 D
 else
    AddTools = true
 end
-local function Be()
-        local soundId = "rbxassetid://17150550093"
 
--- Create and configure the sound
-local sound = Instance.new("Sound")
-sound.SoundId = soundId
-sound.Volume = 2
-sound.Parent = game.Workspace  -- Parent the sound to the Workspace
-
--- Function to adjust the playback speed to extend the duration
-local function extendDuration(sound, targetDuration)
-    local currentDuration = sound.TimeLength
-    local speedFactor = currentDuration / targetDuration
-    sound.PlaybackSpeed = 2
-end
-
--- Play the sound
-sound:Play()
-end
 local function Tools()
         if AddTools then
         local tool1 = Instance.new("Tool")
@@ -277,9 +259,6 @@ humanoid.Died:Connect(function()
 end)
 wait()
 Tools()
-task.delay(1.3, function()
-Be()
-end)
     elseif moveDirection == 0 then
         task.spawn(function()
     local player = game.Players.LocalPlayer
@@ -466,9 +445,6 @@ humanoid.Died:Connect(function()
 end)
 wait()
 Tools()
-task.delay(0.8, function()
-Be()
-end)
     end
 end
         checkMovementState()
