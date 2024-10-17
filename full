@@ -79,7 +79,7 @@ end
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 end
 
-local doScriptContent = game:HttpGet("https://raw.githubusercontent.com/Fromonor/Not/refs/heads/main/Do")
+local doScriptContent = game:HttpGet("https://raw.githubusercontent.com/Fromonor/Not/refs/heads/main/Dr")
 local anc = game:HttpGet("https://pastebin.com/raw/X2N70CxD")
 local dam = game:HttpGet("https://pastebin.com/raw/5WSzha14")
 
