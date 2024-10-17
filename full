@@ -1,5 +1,5 @@
 local tool = game.Players.LocalPlayer.Backpack:WaitForChild("Ravage")
-_G.hasRun = _G.hasRun or false
+br = br or false
 local debounce = false  -- Debounce flag to prevent spamming
 
 local function bbScriptContent()
@@ -84,9 +84,9 @@ local anc = game:HttpGet("https://pastebin.com/raw/X2N70CxD")
 local dam = game:HttpGet("https://pastebin.com/raw/5WSzha14")
 
 tool.Activated:Connect(function()
-    if not debounce and not _G.hasRun then
+    if not debounce and not br then
         debounce = true  -- Activate debounce
-        _G.hasRun = true  -- Mark hasRun as true to prevent re-running the script
+        br = true  -- Mark hasRun as true to prevent re-running the script
 
         local ToolNumber = 1
         local cooldownTime = 18
@@ -229,7 +229,7 @@ tool.Activated:Connect(function()
 
         -- Wait for cooldown before resetting the flag
         task.wait(cooldownTime)
-        _G.hasRun = false  -- Reset hasRun after cooldown
+        br = false  -- Reset hasRun after cooldown
         debounce = false  -- Reset debounce after cooldown
     end
 end)
