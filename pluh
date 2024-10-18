@@ -55,6 +55,7 @@ local function checkMovementState()
     
     if moveDirection > 0 then
        task.spawn(function()
+task.spawn(function()
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humRp = character:WaitForChild("HumanoidRootPart")
@@ -159,16 +160,6 @@ local Character = Players.LocalPlayer.Character or Players.LocalPlayer.Character
 
 local animationPlayed = false -- Flag to track if the animation has already been played
 end)
-task.spawn(function()
-wait(0.2)
-local player = game.Players.LocalPlayer
-local s = tick()
-while tick() - s < 1.47 do
-local h = game.Players.LocalPlayer.Character.HumanoidRootPart
-h.CFrame = h.CFrame * CFrame.new(0, 0, -0.4)
-wait()
-end
-end)
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local animationId = 7815618175 -- Replace with your specific animation ID
@@ -250,6 +241,17 @@ humanoid.Died:Connect(function()
 end)
 wait()
 Tools()
+end)
+task.spawn(function()
+wait(0.2)
+local player = game.Players.LocalPlayer
+local s = tick()
+while tick() - s < 1.47 do
+local h = game.Players.LocalPlayer.Character.HumanoidRootPart
+h.CFrame = h.CFrame * CFrame.new(0, 0, -0.2)
+wait()
+end
+end)
     elseif moveDirection == 0 then
         task.spawn(function()
     local player = game.Players.LocalPlayer
