@@ -1,35 +1,4 @@
--- Get the third UnnamedIcon in the TopbarContainer
-local topbarContainer = game.Players.LocalPlayer.PlayerGui.TopbarPlus.TopbarContainer
-local unnamedIcons = topbarContainer:GetChildren()
-
-local unnamedIconCount = 0
-local targetUnnamedIcon
-
--- Find the third unnamed icon
-for _, icon in ipairs(unnamedIcons) do
-    if icon.Name == "UnnamedIcon" then
-        unnamedIconCount = unnamedIconCount + 1
-        if unnamedIconCount == 3 then
-            targetUnnamedIcon = icon
-            break
-        end
-    end
-end
-
--- If the third UnnamedIcon exists, access the IconImage
-if targetUnnamedIcon then
-    local iconImage = targetUnnamedIcon.DropdownContainer.DropdownFrame.ShiftLock.IconButton.IconImage
-
-    -- Start the loop for 3 seconds
-    local startTime = tick()
-
-    while tick() - startTime < 7 do
-        -- If the image matches the desired one, change it
-        if iconImage.Image == "rbxassetid://12343172777" then
-            iconImage.Image = "rbxassetid://12343172715"
-
-            -- Fire server to adjust the setting
-            local args = {
+local args = {
                 [1] = {
                     ["setting"] = "S_ShiftLock",
                     ["Goal"] = "Adjust Setting",
@@ -42,11 +11,7 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 task.delay(7, function()
      game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 end)
-            -- Delay for 3 seconds, then revert the image back
             wait(7)
-                if iconImage.Image == "rbxassetid://12343172715" then
-                    iconImage.Image = "rbxassetid://12343172777"
-   
                     local args = {
                 [1] = {
                     ["setting"] = "S_ShiftLock",
@@ -55,13 +20,6 @@ end)
                 }
             }
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-            end
-
-            -- Break the loop once the image has been changed
-            break
-        end
-    end
-end
 local Original = "rbxassetid://7815618175"  -- The animation ID you're detecting
 
 local player = game.Players.LocalPlayer
