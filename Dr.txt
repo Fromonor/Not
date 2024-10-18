@@ -1,0 +1,571 @@
+-- Get the third UnnamedIcon in the TopbarContainer
+local topbarContainer = game.Players.LocalPlayer.PlayerGui.TopbarPlus.TopbarContainer
+local unnamedIcons = topbarContainer:GetChildren()
+
+local unnamedIconCount = 0
+local targetUnnamedIcon
+
+-- Find the third unnamed icon
+for _, icon in ipairs(unnamedIcons) do
+    if icon.Name == "UnnamedIcon" then
+        unnamedIconCount = unnamedIconCount + 1
+        if unnamedIconCount == 3 then
+            targetUnnamedIcon = icon
+            break
+        end
+    end
+end
+
+-- If the third UnnamedIcon exists, access the IconImage
+if targetUnnamedIcon then
+    local iconImage = targetUnnamedIcon.DropdownContainer.DropdownFrame.ShiftLock.IconButton.IconImage
+
+    -- Start the loop for 3 seconds
+    local startTime = tick()
+
+    while tick() - startTime < 7 do
+        -- If the image matches the desired one, change it
+        if iconImage.Image == "rbxassetid://12343172777" then
+            iconImage.Image = "rbxassetid://12343172715"
+
+            -- Fire server to adjust the setting
+            local args = {
+                [1] = {
+                    ["setting"] = "S_ShiftLock",
+                    ["Goal"] = "Adjust Setting",
+                    ["set"] = false
+                }
+            }
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+task.delay(7, function()
+     game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+end)
+            -- Delay for 3 seconds, then revert the image back
+            wait(7)
+                if iconImage.Image == "rbxassetid://12343172715" then
+                    iconImage.Image = "rbxassetid://12343172777"
+   
+                    local args = {
+                [1] = {
+                    ["setting"] = "S_ShiftLock",
+                    ["Goal"] = "Adjust Setting",
+                    ["set"] = true
+                }
+            }
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+            end
+
+            -- Break the loop once the image has been changed
+            break
+        end
+    end
+end
+local Original = "rbxassetid://7815618175"  -- The animation ID you're detecting
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local detectionActive = true  -- Flag to control detection
+
+-- Function to handle animation detection
+local function onAnimationPlayed(animationTrack)
+    -- Check if detection is active and the animation ID matches
+    if detectionActive and animationTrack.Animation.AnimationId == Original then
+        -- Stop the detected animation
+        animationTrack:Stop()
+
+        -- Disable further detection after 7 seconds
+        task.delay(0.1, function()
+        detectionActive = false
+        end)
+    end
+end
+
+-- Connect the function to humanoid's AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+task.spawn(function()
+local player = game.Players.LocalPlayer
+repeat wait() until player.Character.Humanoid
+local humanoid = player.Character.Humanoid
+local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+local UserInputService = game:GetService("UserInputService")
+debounce = false -- Activate debounce
+local anim = Instance.new("Animation")
+anim.AnimationId = "rbxassetid://16945573694"
+local playAni = humanoid:LoadAnimation(anim)
+anim.AnimationId = "rbxassetid://0"
+
+spawn(function()
+    wait(1)
+    debounce = true
+end)
+
+playAni:Play()
+playAni:AdjustSpeed(1)
+wait(0.3)
+playAni:AdjustSpeed(1)
+wait(0.8)
+playAni:Stop()
+
+local Players = game:GetService("Players")
+local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+
+local animationPlayed = false -- Flag to track if the animation has already been played
+end)
+task.spawn(function()
+local player = game.Players.LocalPlayer
+repeat wait() until player.Character.Humanoid
+local humanoid = player.Character.Humanoid
+local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+local UserInputService = game:GetService("UserInputService")
+debounce = false -- Activate debounce
+local anim = Instance.new("Animation")
+anim.AnimationId = "rbxassetid://16945550029"
+local playAnim = humanoid:LoadAnimation(anim)
+anim.AnimationId = "rbxassetid://0"
+
+spawn(function()
+    wait(1)
+    debounce = true
+end)
+
+wait(0.8)
+playAnim:Play()
+playAnim:AdjustSpeed(1)
+wait(0.3)
+playAnim:AdjustSpeed(1)
+
+local Players = game:GetService("Players")
+local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+
+local animationPlayed = false -- Flag to track if the animation has already been played
+end)
+task.spawn(function()
+local soundId = "rbxassetid://16945495411"
+
+-- Create and configure the sound
+local sound = Instance.new("Sound")
+sound.SoundId = soundId
+sound.Volume = 1.1
+sound.Parent = game.Workspace  -- Parent the sound to the Workspace
+
+-- Function to adjust the playback speed to extend the duration
+local function extendDuration(sound, targetDuration)
+    local currentDuration = sound.TimeLength
+    local speedFactor = currentDuration / targetDuration
+    sound.PlaybackSpeed = speedFactor
+end
+
+-- Play the sound
+sound:Play()
+end)
+task.spawn(function()
+local soundId = "rbxassetid://16945517708"
+
+-- Create and configure the sound
+local sound = Instance.new("Sound")
+sound.SoundId = soundId
+sound.Volume = 2
+sound.Parent = game.Workspace  -- Parent the sound to the Workspace
+
+-- Function to adjust the playback speed to extend the duration
+local function extendDuration(sound, targetDuration)
+    local currentDuration = sound.TimeLength
+    local speedFactor = currentDuration / targetDuration
+    sound.PlaybackSpeed = speedFactor
+end
+
+-- Play the sound
+wait(0.8)
+sound:Play()
+end)
+task.spawn(function()
+local soundId = "rbxassetid://16945593216"
+
+-- Create and configure the sound
+local sound = Instance.new("Sound")
+sound.SoundId = soundId
+sound.Volume = 2
+sound.Parent = game.Workspace  -- Parent the sound to the Workspace
+
+-- Function to adjust the playback speed to extend the duration
+local function extendDuration(sound, targetDuration)
+    local currentDuration = sound.TimeLength
+    local speedFactor = currentDuration / targetDuration
+    sound.PlaybackSpeed = speedFactor
+end
+
+-- Play the sound
+wait(1)
+sound:Play()
+end)
+task.spawn(function()
+local soundId = "rbxassetid://16945691441"
+
+-- Create and configure the sound
+local sound = Instance.new("Sound")
+sound.SoundId = soundId
+sound.Volume = 2
+sound.Parent = game.Workspace  -- Parent the sound to the Workspace
+
+-- Function to adjust the playback speed to extend the duration
+local function extendDuration(sound, targetDuration)
+    local currentDuration = sound.TimeLength
+    local speedFactor = currentDuration / targetDuration
+    sound.PlaybackSpeed = speedFactor
+end
+
+-- Play the sound
+wait(1.1)
+sound:Play()
+wait(5.44)
+local s = Instance.new("Sound", game.Players.LocalPlayer.Character.HumanoidRootPart)
+s.SoundId = "rbxassetid://16945723339"
+s.Volume = 2
+s:Play()
+end)
+task.spawn(function()
+task.spawn(function()
+wait(0.3)
+loadstring(game:HttpGet("https://pastebin.com/raw/tCK8ncnK"))()
+end)
+wait(0.8)
+wait(1.4)
+local player = game.Players.LocalPlayer
+local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
+
+-- Clone the original attachment
+local originalAttachment = game.ReplicatedStorage.Resources.KJEffects["1and2"]["1and2"]
+local clonedAttachment = originalAttachment:Clone()
+
+-- Set the cloned attachment's parent to the HumanoidRootPart
+clonedAttachment.Parent = humanoidRootPart
+
+-- Calculate the new position: 4 studs forward and 2 studs to the right
+local forwardOffset = humanoidRootPart.CFrame.LookVector * 1.9
+local rightOffset = humanoidRootPart.CFrame.RightVector * 0.1
+local upOffset = humanoidRootPart.CFrame.UpVector * 1.1
+clonedAttachment.WorldPosition = humanoidRootPart.Position + forwardOffset + rightOffset + upOffset
+
+-- Emit particles from the cloned attachment
+for _, child in ipairs(clonedAttachment:GetChildren()) do
+    if child:IsA("ParticleEmitter") then
+        child:Emit(12) -- Emit 12 particles
+    end
+end
+local final1 = game.ReplicatedStorage.Resources.KJEffects["1and2smoke"]["1and2smoke"]:Clone()
+final1.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
+for _, child in ipairs(final1:GetChildren()) do
+    if child:IsA("ParticleEmitter") then -- Check if the child is a ParticleEmitter
+        child:Emit(10) -- Emit 20 particles
+    end
+end
+wait(0.3)
+local player = game.Players.LocalPlayer
+local humanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
+
+-- Clone the original attachment
+local originalAttachment = game.ReplicatedStorage.Resources.KJEffects["1and2"]["1and2"]
+local clonedAttachment = originalAttachment:Clone()
+
+-- Set the cloned attachment's parent to the HumanoidRootPart
+clonedAttachment.Parent = humanoidRootPart
+
+-- Calculate the new position: 4 studs forward and 2 studs to the right
+local forwardOffset = humanoidRootPart.CFrame.LookVector * 1.9
+local rightOffset = humanoidRootPart.CFrame.RightVector * -0.1
+local upOffset = humanoidRootPart.CFrame.UpVector * 1.1
+clonedAttachment.WorldPosition = humanoidRootPart.Position + forwardOffset + rightOffset + upOffset
+
+-- Emit particles from the cloned attachment
+for _, child in ipairs(clonedAttachment:GetChildren()) do
+    if child:IsA("ParticleEmitter") then
+        child:Emit(12) -- Emit 12 particles
+    end
+end
+local final1 = game.ReplicatedStorage.Resources.KJEffects["1and2smoke"]["1and2smoke"]:Clone()
+final1.Parent = game.Players.LocalPlayer.Character["HumanoidRootPart"]
+for _, child in ipairs(final1:GetChildren()) do
+    if child:IsA("ParticleEmitter") then -- Check if the child is a ParticleEmitter
+        child:Emit(10) -- Emit 20 particles
+    end
+end
+-- Get the necessary services
+wait(0.44)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+
+-- Reference to the barrage object in ReplicatedStorage
+local barrage = ReplicatedStorage:WaitForChild("Resources"):WaitForChild("KJEffects"):WaitForChild("barrage")
+
+-- Function to play the barrage effect at the player's direction
+local function playBarrageEffect(player)
+    -- Clone the barrage object
+    local barrageClone = barrage:Clone()
+    
+    -- Parent the cloned barrage to the Workspace
+    barrageClone.Parent = Workspace
+
+    -- Enable all ParticleEmitters inside the barrage clone
+    for _, descendant in ipairs(barrageClone:GetDescendants()) do
+        if descendant:IsA("ParticleEmitter") then
+            descendant.Enabled = true
+        end
+    end
+    
+    -- Keep the barrage effect in front of the player's character
+    local connection
+    connection = RunService.RenderStepped:Connect(function()
+        -- Ensure player and character are valid
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local rootPart = player.Character.HumanoidRootPart
+
+            -- Set the position of the barrage in front of the player and rotate it slightly upward
+            local forwardCFrame = rootPart.CFrame * CFrame.new(0, 1.3, -3) * CFrame.Angles(math.rad(35), 0, 0)
+            barrageClone.CFrame = forwardCFrame
+        else
+            -- If the player or character is no longer valid, disconnect the connection
+            connection:Disconnect()
+            barrageClone:Destroy()
+        end
+    end)
+
+    -- Smoke effect logic: Play BARRAGESMOKE effect on player's character
+    local final1 = ReplicatedStorage.Resources.KJEffects["BARRAGESMOKE"]["BARRAGESMOKE"]:Clone()
+    final1.Parent = player.Character.HumanoidRootPart
+
+    local iterations = 1.2 / 0.2 -- Total duration (1.4 seconds) divided by interval (0.2 seconds)
+    local currentIteration = 0
+
+    -- Emit smoke particles every 0.2 seconds
+    while currentIteration < iterations do
+        for _, child in ipairs(final1:GetChildren()) do
+            if child:IsA("ParticleEmitter") then
+                child:Emit(20) -- Emit 20 particles
+            end
+        end
+        currentIteration = currentIteration + 1
+        wait(0.2) -- Wait for 0.2 seconds before the next iteration
+    end
+
+    -- Destroy the smoke and barrage effects after 1.4 seconds
+    connection:Disconnect() -- Disconnect the barrage movement
+    barrageClone:Destroy() -- Destroy the barrage effect
+    final1:Destroy() -- Destroy the smoke effect
+end
+
+-- Example usage: Trigger the barrage effect for the local player
+local player = Players.LocalPlayer
+playBarrageEffect(player)
+wait()
+-- Get the player and their character
+local player = game.Players.LocalPlayer
+local playerCharacter = player.Character or player.CharacterAdded:Wait()
+
+-- Locate the mesh in ReplicatedStorage
+local mesh = game.ReplicatedStorage.Resources.KJEffects.SpinnerDownMesh.Mesh
+
+if mesh then
+    -- Create a new Part to hold the Mesh
+    local part = Instance.new("Part")
+    part.Size = Vector3.new(0.1, 0.3, 0.3) -- Initial size
+    part.Anchored = true -- Anchor the part to prevent it from falling
+    part.CanCollide = false -- Make sure it doesn't collide with other objects
+    part.Transparency = 1 -- Make the part invisible
+    part.Parent = game.Workspace -- Parent the part to Workspace
+    
+    -- Clone the Mesh and parent it to the new Part
+    local meshClone = mesh:Clone()
+    meshClone.Parent = part
+    meshClone.Scale = Vector3.new(0.1, 0.3, 0.3) -- Initial mesh scale
+    
+    -- Create a new Decal to apply the texture
+    local decal = Instance.new("Decal")
+    decal.Texture = "rbxassetid://9622368924" -- Replace with your texture ID
+    decal.Face = Enum.NormalId.Front
+    decal.Transparency = 0.6 -- Start transparency
+    decal.Parent = part
+    
+    -- Position the new Part relative to the player's character
+    local humanoidRootPart = playerCharacter:WaitForChild("HumanoidRootPart")
+    local offset = Vector3.new(0, -1.4, 0) -- Adjust this offset as needed
+    part.CFrame = CFrame.new(humanoidRootPart.Position + offset)
+    part.Rotation = Vector3.new(0.1, 0, 90) -- Initial orientation
+    
+    -- Rotation speed
+    local rotationSpeed = 80
+    
+    -- Fade and grow duration
+    local startTime = tick()
+    local growDuration = 0.3 -- Duration to grow, spin, and fade (in seconds)
+    
+    -- Max size for the growth
+    local maxSize = Vector3.new(0.1, 0.6, 0.6) -- Limit for size growth
+    
+    game:GetService("RunService").Heartbeat:Connect(function(deltaTime)
+        local elapsedTime = tick() - startTime
+        local progress = elapsedTime / growDuration
+
+        if progress < 1 then
+            -- Update the transparency (fade out from 0.5 to 1)
+            decal.Transparency = 0.6 + (progress * 0.4)
+
+            -- Interpolate between the initial size and the maximum size
+            local newSize = Vector3.new(
+                0.1 + (maxSize.X - 0.1) * progress,
+                0.3 + (maxSize.Y - 0.3) * progress,
+                0.3 + (maxSize.Z - 0.3) * progress
+            )
+            part.Size = newSize
+            meshClone.Scale = newSize -- Optionally grow the mesh scale
+
+            -- Rotate the part (spin) on the X-axis
+            part.CFrame = part.CFrame * CFrame.Angles(-math.rad(rotationSpeed * deltaTime), 0, 0)
+        else
+            -- Ensure the part is fully faded and destroy it
+            decal.Transparency = 1
+            part:Destroy()
+        end
+    end)
+else
+    warn("Mesh not found inside SpinnerDownMesh.")
+end
+task.spawn(function()
+loadstring(game:HttpGet("https://pastebin.com/raw/PHgbAzCd"))()
+end)
+wait(0.5)
+-- Get the player and their character
+local player = game.Players.LocalPlayer
+local playerCharacter = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = playerCharacter:WaitForChild("HumanoidRootPart")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Clone and configure spinbeam
+local spinBeam = game.ReplicatedStorage.Resources.KJEffects["RUNAROUNDWIND"].RUNAROUNDWIND:Clone()
+spinBeam.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+local curr = spinBeam.Position
+spinBeam.Position = Vector3.new(curr.X, curr.Y, 0)
+for _, child in ipairs(spinBeam:GetChildren()) do
+    if child:IsA("ParticleEmitter") then
+        child:Emit(1)
+        child.Enabled = true
+
+spawn(function()
+ wait(0.1)
+        local fadeTime = 0.2 -- Time in seconds to complete fade out
+        local steps = 10   -- Number of steps to make fading smoother
+
+        -- Start a coroutine to fade out the particles
+        coroutine.wrap(function()
+            for i = 1, steps do
+                local transparencyValue = NumberSequence.new(i / steps) -- Gradually increase transparency
+                child.Transparency = transparencyValue
+                wait(fadeTime / steps) -- Wait a little between steps
+            end
+            child.Enabled = false -- Disable the emitter after fading out
+        end)()
+end)
+    end
+end
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local floatingRock = replicatedStorage.Resources.KJEffects.spinbeam
+
+-- Clone the FloatingRock part
+local rockClone = floatingRock:Clone()
+
+-- Enable the Beam
+local beam = rockClone:WaitForChild("beam2"):WaitForChild("Beam")
+beam.Enabled = true
+
+-- Set the rock's parent to Workspace
+rockClone.Parent = workspace
+rockClone.CanCollide = false
+rockClone.Anchored = true
+rockClone.Size = Vector3.new(1, 1, 1)
+
+-- Position the rock at the player's position initially
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+rockClone.CFrame = humanoidRootPart.CFrame * CFrame.new(0, 5, -3)  -- Initial position, 3 studs behind the player
+
+-- Update the rock's position and orientation to follow the player
+game:GetService("RunService").RenderStepped:Connect(function()
+    if character and humanoidRootPart then
+        -- Set the rockClone behind the player (3 studs) and match the player's facing direction
+        local offset = humanoidRootPart.CFrame:ToWorldSpace(CFrame.new(0, 0, 10))
+        
+        -- Match the character's facing direction by maintaining the humanoid's look direction
+        rockClone.CFrame = CFrame.new(offset.Position, humanoidRootPart.Position + humanoidRootPart.CFrame.LookVector * 5)
+    end
+end)
+
+local function fadeOutBeam(duration)
+    -- Get the current transparency value from the NumberSequence
+    local currentTransparency = beam.Transparency.Keypoints[1].Value -- Assuming the first keypoint is the main transparency value
+    local endTransparency = 1 -- Fully transparent
+    local increment = (endTransparency - currentTransparency) / (duration * 60) -- Assuming 60 frames per second
+
+    for i = 1, duration * 60 do
+        currentTransparency = currentTransparency + increment
+        -- Set the new transparency value back to the beam
+        beam.Transparency = NumberSequence.new(currentTransparency) -- Set the transparency as a NumberSequence
+        wait(1/60) -- Wait for the next frame
+    end
+
+    beam.Enabled = false -- Disable the beam after fading out
+end
+
+-- Call the fade-out function (e.g., after 5 seconds)
+task.spawn(function()
+wait(0.54)
+fadeOutBeam(0.06)
+end)
+
+task.spawn(function()
+    wait(0.3)
+    local final2 = replicatedStorage.Resources.KJEffects["Left Leg"].starries:Clone()
+    final2.Parent = playerCharacter["Torso"]
+    for _, child in ipairs(final2:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(20)
+        end
+    end
+    wait(0.6)
+    final2:Destroy()
+end)
+    wait(0.3)
+    local final2 = replicatedStorage.Resources.KJEffects["Left Leg"].speedlines:Clone()
+    final2.Parent = playerCharacter["Torso"]
+    for _, child in ipairs(final2:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(20)
+        end
+    end
+    wait(0.6)
+    final2:Destroy()
+    wait(0.3)
+    local forwardOffset = humanoidRootPart.CFrame.LookVector * 4
+
+    local attachment = replicatedStorage.Resources.KJEffects["lastkick"].Attachment:Clone()
+    attachment.Parent = humanoidRootPart
+    attachment.WorldPosition = humanoidRootPart.Position + forwardOffset
+    for _, child in ipairs(attachment:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(6)
+        end
+    end
+
+    local smoker = replicatedStorage.Resources.KJEffects["lastkick"].smoker:Clone()
+    smoker.Parent = humanoidRootPart
+    smoker.WorldPosition = humanoidRootPart.Position + forwardOffset
+    for _, child in ipairs(smoker:GetChildren()) do
+        if child:IsA("ParticleEmitter") then
+            child:Emit(20)
+        end
+    end
+end)
