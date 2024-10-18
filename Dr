@@ -486,7 +486,7 @@ end
 
 -- Call the fade-out function (e.g., after 5 seconds)
 task.spawn(function()
-wait(1)
+wait(1.6)
 fadeOutBeam(0.06)
 end)
 
