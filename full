@@ -79,6 +79,12 @@ end
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 end
 
+local function s(Tool, Time)
+game.Players.LocalPlayer.Backpack["Tool"].RequiresHandle = true
+task.delay(Time, function()
+game.Players.LocalPlayer.Backpack["Tool"].RequiresHandle = false
+end)
+end
 local doScriptContent = game:HttpGet("https://raw.githubusercontent.com/Fromonor/Not/refs/heads/main/Dr")
 local dam = game:HttpGet("https://pastebin.com/raw/5WSzha14")
 
@@ -170,6 +176,7 @@ tool.Activated:Connect(function()
                             task.spawn(function()
                                 loadstring(doScriptContent)()
                                 loadstring(dam)()
+                                s(Swift Sweep, 7)
                             end)
 
                             -- Wait and then make the target model play the specified animation
@@ -202,12 +209,14 @@ tool.Activated:Connect(function()
                             -- Player is close but looking away, run the bb script
                             task.spawn(function()
                                 bbScriptContent()
+                                s(Swift Sweep, 1)
                             end)
                         end
                     elseif distance > 6 then
                         -- If the player is more than 6 studs away, run the bb script
                         task.spawn(function()
                             bbScriptContent()
+                            s(Swift Sweep, 1)
                         end)
                     end
 
@@ -216,6 +225,7 @@ tool.Activated:Connect(function()
                     if targetHumanoid and targetHumanoid.Health == 0 then
                         task.spawn(function()
                             bbScriptContent()
+                            s(Swift Sweep, 1)
                         end)
                     end
                 end
