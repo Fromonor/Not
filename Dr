@@ -401,7 +401,7 @@ end
 task.spawn(function()
 loadstring(game:HttpGet("https://pastebin.com/raw/PHgbAzCd"))()
 end)
-wait(0.5)
+wait(0.7)
 -- Get the player and their character
 local player = game.Players.LocalPlayer
 local playerCharacter = player.Character or player.CharacterAdded:Wait()
