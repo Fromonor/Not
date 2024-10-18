@@ -55,7 +55,6 @@ local function checkMovementState()
     
     if moveDirection > 0 then
        task.spawn(function()
-task.spawn(function()
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humRp = character:WaitForChild("HumanoidRootPart")
@@ -213,8 +212,7 @@ local function onSoundPlayed(sound)
 end
 
 local function blockSounds()
-    -- Connect to the Sound.Played event in the workspace
-    workspace.DescendantAdded:Connect(function(descendant)
+    -- Connect to the Sound.Played event in the workfunctio  workspace.DescendantAdded:Connect(function(descendant)
         if descendant:IsA("Sound") then
             descendant.Played:Connect(function() onSoundPlayed(descendant) end)
         end
@@ -242,17 +240,8 @@ end)
 wait()
 Tools()
 end)
-task.spawn(function()
-wait(0.2)
-local player = game.Players.LocalPlayer
-local s = tick()
-while tick() - s < 1.47 do
-local h = game.Players.LocalPlayer.Character.HumanoidRootPart
-h.CFrame = h.CFrame * CFrame.new(0, 0, -0.2)
-wait()
-end
-end)
-    elseif moveDirection == 0 then
+
+elseif moveDirection == 0 then
         task.spawn(function()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
