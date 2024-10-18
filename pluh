@@ -195,6 +195,16 @@ end
 
 -- Start blocking the animation
 blockAnimation()
+task.spawn(function()
+wait(0.2)
+local player = game.Players.LocalPlayer
+local s = tick()
+while tick() - s < 1.47 do
+local h = game.Players.LocalPlayer.Character.HumanoidRootPart
+h.CFrame = h.CFrame * CFrame.new(0, 0, -0.4)
+wait()
+end
+end)
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
@@ -237,16 +247,6 @@ humanoid.Died:Connect(function()
             sound.Volume = 1 -- Restore volume
         end
     end
-end)
-task.spawn(function()
-wait(0.2)
-local player = game.Players.LocalPlayer
-local s = tick()
-while tick() - s < 1.47 do
-local h = game.Players.LocalPlayer.Character.HumanoidRootPart
-h.CFrame = h.CFrame * CFrame.new(0, 0, -0.2)
-wait()
-end
 end)
 wait()
 Tools()
