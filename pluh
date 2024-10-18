@@ -165,7 +165,7 @@ local player = game.Players.LocalPlayer
 local s = tick()
 while tick() - s < 1.47 do
 local h = game.Players.LocalPlayer.Character.HumanoidRootPart
-h.CFrame = h.CFrame * CFrame.new(0, 0, -0.2)
+h.CFrame = h.CFrame * CFrame.new(0, 0, -0.3)
 wait()
 end
 end)
