@@ -399,6 +399,7 @@ else
     warn("Mesh not found inside SpinnerDownMesh.")
 end
 task.spawn(function()
+wait(0.3)
 loadstring(game:HttpGet("https://pastebin.com/raw/PHgbAzCd"))()
 end)
 wait(0.7)
@@ -486,7 +487,7 @@ end
 
 -- Call the fade-out function (e.g., after 5 seconds)
 task.spawn(function()
-wait(1.6)
+wait(0.54)
 fadeOutBeam(0.06)
 end)
 
