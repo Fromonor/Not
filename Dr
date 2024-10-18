@@ -1,3 +1,10 @@
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+task.delay(7, function()
+     game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+end)
+task.spawn(function()
+local s = tick()
+while tick() - s < 7 do
 local args = {
                 [1] = {
                     ["setting"] = "S_ShiftLock",
@@ -6,12 +13,10 @@ local args = {
                 }
             }
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-
-game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-task.delay(7, function()
-     game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+wait(0.1)
+end
 end)
-            wait(7)
+            task.delay(7, function()
                     local args = {
                 [1] = {
                     ["setting"] = "S_ShiftLock",
@@ -20,6 +25,7 @@ end)
                 }
             }
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+end)
 local Original = "rbxassetid://7815618175"  -- The animation ID you're detecting
 
 local player = game.Players.LocalPlayer
@@ -35,7 +41,7 @@ local function onAnimationPlayed(animationTrack)
         animationTrack:Stop()
 
         -- Disable further detection after 7 seconds
-        task.delay(0.1, function()
+        task.delay(6.6, function()
         detectionActive = false
         end)
     end
