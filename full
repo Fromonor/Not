@@ -2,6 +2,13 @@ local tool = game.Players.LocalPlayer.Backpack:WaitForChild("Ravage")
 br = br or false
 local debounce = false  -- Debounce flag to prevent spamming
 
+local function s(Tool, Time)
+game.Players.LocalPlayer.Backpack[Tool].RequiresHandle = true
+task.delay(Time, function()
+game.Players.LocalPlayer.Backpack[Tool].RequiresHandle = false
+end)
+end
+
 local function bbScriptContent()
     task.spawn(function()
     local player = game.Players.LocalPlayer
@@ -79,12 +86,6 @@ end
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 end
 
-local function s(Tool, Time)
-game.Players.LocalPlayer.Backpack["Tool"].RequiresHandle = true
-task.delay(Time, function()
-game.Players.LocalPlayer.Backpack["Tool"].RequiresHandle = false
-end)
-end
 local doScriptContent = game:HttpGet("https://raw.githubusercontent.com/Fromonor/Not/refs/heads/main/Dr")
 local dam = game:HttpGet("https://pastebin.com/raw/5WSzha14")
 
