@@ -1,17 +1,18 @@
-local Original = 12447707844
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local animationIdToCheck = "rbxassetid://12447707844"
+local debounce = false -- To prevent multiple detections
 
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-
-local function onAnimationPlayed(animationTrack)
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. Original then
-
-local p = game.Players.LocalPlayer
-local Humanoid = p.Character:WaitForChild("Humanoid")
-
-for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-    animTrack:Stop()
+-- Function to check if the specific animation is playing
+local function isAnimationPlaying()
+    local humanoid = LocalPlayer.Character:WaitForChild("Humanoid")
+    for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+        if track.Animation.AnimationId == animationIdToCheck then
+            track:Stop()
+            return true  -- Animation is playing
+        end
+    end
+    return false  -- Animation is not playing
 end
 
 local Players = game:GetService("Players")
@@ -54,7 +55,7 @@ local function checkMovementState()
     local moveDirection = LocalPlayer.Character.Humanoid.MoveDirection.Magnitude
     
     if moveDirection > 0 then
-       task.spawn(function()
+        task.spawn(function()
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humRp = character:WaitForChild("HumanoidRootPart")
@@ -159,6 +160,41 @@ local Character = Players.LocalPlayer.Character or Players.LocalPlayer.Character
 
 local animationPlayed = false -- Flag to track if the animation has already been played
 end)
+task.spawn(function()
+wait(0.2)
+local UserInputService = game:GetService("UserInputService")
+
+task.spawn(function()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+    local b = Instance.new("BodyVelocity")
+    b.MaxForce = Vector3.new(40000, 40000, 40000)
+    b.P = 1250
+    b.Parent = humanoidRootPart
+    task.delay(1.55, function()
+    b:Destroy()
+    end)
+
+    local moveSpeed = 6
+
+    while true do
+        wait() -- Yield to avoid freezing the script
+        local lookVector = humanoidRootPart.CFrame.LookVector
+        local rightVector = humanoidRootPart.CFrame.RightVector
+
+        -- Check input and set velocity
+        if UserInputService:IsKeyDown(Enum.KeyCode.D) then
+            b.Velocity = rightVector * moveSpeed -- Move right
+        elseif UserInputService:IsKeyDown(Enum.KeyCode.A) then
+            b.Velocity = -rightVector * moveSpeed -- Move left
+        else
+            b.Velocity = lookVector * moveSpeed -- Move forward
+        end
+    end
+end)
+end)
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local animationId = 7815618175 -- Replace with your specific animation ID
@@ -212,11 +248,12 @@ local function onSoundPlayed(sound)
 end
 
 local function blockSounds()
-    -- Connect to the Sound.Played event in the workfunctio  workspace.DescendantAdded:Connect(function(descendant)
+    -- Connect to the Sound.Played event in the workspace
+    workspace.DescendantAdded:Connect(function(descendant)
         if descendant:IsA("Sound") then
             descendant.Played:Connect(function() onSoundPlayed(descendant) end)
         end
-    end
+    end)
     
     -- Check for existing sounds when the script runs
     for _, sound in ipairs(workspace:GetDescendants()) do
@@ -229,19 +266,16 @@ end
 -- Start blocking sounds
 blockSounds()
 
--- Restore volume when the player dies
-humanoid.Died:Connect(function()
+if humanoid.Health == 0 then
     for _, sound in ipairs(workspace:GetDescendants()) do
         if sound:IsA("Sound") and soundsToBlock[sound.SoundId] then
-            sound.Volume = 1 -- Restore volume
+            sound.Volume = 1 -- Restore volume when the player dies
         end
     end
-end)
+end
 wait()
 Tools()
-end
-
-elseif moveDirection == 0 then
+    elseif moveDirection == 0 then
         task.spawn(function()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
@@ -417,25 +451,28 @@ end
 -- Start blocking sounds
 blockSounds()
 
--- Restore volume when the player dies
-humanoid.Died:Connect(function()
+if humanoid.Health == 0 then
     for _, sound in ipairs(workspace:GetDescendants()) do
         if sound:IsA("Sound") and soundsToBlock[sound.SoundId] then
-            sound.Volume = 1 -- Restore volume
+            sound.Volume = 1 -- Restore volume when the player dies
         end
     end
-end)
+end
 wait()
 Tools()
-    end
 end
+end
+
+-- Main loop to detect movement or stillness when animation is playing
+while true do
+    if not debounce and isAnimationPlaying() then
         checkMovementState()
         debounce = true
         wait(8) 
         debounce = false
-        if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then
+        game.Players.LocalPlayer.Character.Humanoid.Died:Connect(function()
         debounce = true
+        end)
     end
-
-
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+    wait()
+ end
