@@ -143,7 +143,7 @@ debounce = false -- Activate debounce
 local anim = Instance.new("Animation")
 anim.AnimationId = "rbxassetid://18445236460"
 local playAnim = humanoid:LoadAnimation(anim)
-anim.AnimationId = "rbxassetid://0"
+anim.AnimationId = "rbxassetid://10"
 
 spawn(function()
     wait(1)
