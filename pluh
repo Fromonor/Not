@@ -143,7 +143,7 @@ debounce = false -- Activate debounce
 local anim = Instance.new("Animation")
 anim.AnimationId = "rbxassetid://18445236460"
 local playAnim = humanoid:LoadAnimation(anim)
-anim.AnimationId = "rbxassetid://10"
+anim.AnimationId = "rbxassetid://0"
 
 spawn(function()
     wait(1)
@@ -163,9 +163,7 @@ end)
 task.spawn(function()
 wait(0.2)
 local UserInputService = game:GetService("UserInputService")
-
-task.spawn(function()
-    local player = game.Players.LocalPlayer
+local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
@@ -185,15 +183,8 @@ task.spawn(function()
         local rightVector = humanoidRootPart.CFrame.RightVector
 
         -- Check input and set velocity
-        if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-            b.Velocity = rightVector * moveSpeed -- Move right
-        elseif UserInputService:IsKeyDown(Enum.KeyCode.A) then
-            b.Velocity = -rightVector * moveSpeed -- Move left
-        else
             b.Velocity = lookVector * moveSpeed -- Move forward
-        end
     end
-end)
 end)
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -221,8 +212,9 @@ local function blockAnimation()
         end
     end
 
+wait(1.5)
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-wait(3)
+wait(1.5)
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
     -- Wait for 4 seconds before unblocking
     wait()
