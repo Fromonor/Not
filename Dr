@@ -1,4 +1,3 @@
-task.spawn(function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 task.delay(7, function()
      game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
@@ -16,7 +15,6 @@ local args = {
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
 wait(0.1)
 end
-end)
             task.delay(7, function()
                     local args = {
                 [1] = {
@@ -41,8 +39,12 @@ local function onAnimationPlayed(animationTrack)
     if detectionActive and animationTrack.Animation.AnimationId == Original then
         -- Stop the detected animation
         animationTrack:Stop()
+        detectionActive = false
+    end
+end
 
-
+-- Connect the function to humanoid's AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 task.spawn(function()
 local player = game.Players.LocalPlayer
 repeat wait() until player.Character.Humanoid
@@ -650,9 +652,3 @@ end)
         end
     end
 end)
-        detectionActive = false
-    end
-end
-
--- Connect the function to humanoid's AnimationPlayed event
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
