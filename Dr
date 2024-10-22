@@ -14,7 +14,7 @@ local function onAnimationPlayed(animationTrack)
     if detectionActive and animationTrack.Animation.AnimationId == Original then
         -- Stop the detected animation
         animationTrack:Stop()
-        wait()
+        wait(7)
         detectionActive = false
     end
 end
