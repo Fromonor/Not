@@ -399,7 +399,7 @@ else
     warn("Mesh not found inside SpinnerDownMesh.")
 end
 task.spawn(function()
-wait(0.58)
+wait(0.65)
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
