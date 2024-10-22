@@ -1,6 +1,7 @@
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 task.delay(7, function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+end)
 local Original = "rbxassetid://7815618175"
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -15,6 +16,7 @@ local function onAnimationPlayed(animationTrack)
         animationTrack:Stop()
         task.delay(7, function()
         detectionActive = false
+        end)
     end
 end
 
