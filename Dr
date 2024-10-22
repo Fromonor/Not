@@ -400,7 +400,130 @@ else
 end
 task.spawn(function()
 wait(0.3)
-loadstring(game:HttpGet("https://pastebin.com/raw/PHgbAzCd"))()
+wait(0.22)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local floatingRockTemplate = replicatedStorage.Resources.KJEffects.FloatingRock
+local PhysicsService = game:GetService("PhysicsService")
+
+local orbitSpeed = 7 -- Speed of the orbit
+local orbitDuration = 0.4 -- Duration for the rocks to orbit
+local launchSpeed = 50 -- Speed at which the rocks are thrown outward
+local fadeDuration = 1 -- Duration for the rocks to fade out
+local fallDelay = 0.8 -- Time before rocks start to fade out
+
+-- Define collision group names
+local debrisCollisionGroup = "Rocks" -- Ensure this matches the collision group created in Roblox Studio
+local playersCollisionGroup = "Players" -- Ensure this matches the collision group for characters
+
+-- Function to fade out all rocks simultaneously
+local function fadeOutRocks(rocks)
+    local startTime = tick()
+    while tick() - startTime < fadeDuration do
+        local transparency = (tick() - startTime) / fadeDuration
+        for _, rock in ipairs(rocks) do
+            rock.Transparency = transparency
+        end
+        wait(0.05)
+    end
+    for _, rock in ipairs(rocks) do
+        rock:Destroy() -- Remove the rock after fading out
+    end
+end
+
+-- Function to get the right vector relative to the given direction
+local function getRightVector(direction)
+    -- Create a right vector perpendicular to the direction vector
+    local rightVector = direction:Cross(Vector3.new(0, 1, 0)).unit
+    return rightVector
+end
+
+-- Function to make the rocks orbit the player and return the last orbit direction
+local function orbitRock(rockClone, angleOffset)
+    local startTime = tick()
+    local orbitRadius = 10 -- Increased orbit radius (5 + original 5)
+    local forwardOffset = Vector3.new(0, 0, -2) -- Offset to position the rocks slightly forward
+    local lastOrbitDirection = Vector3.new() -- Variable to store the last direction
+
+    while tick() - startTime < orbitDuration do
+        local elapsedTime = tick() - startTime
+        local angle = elapsedTime * orbitSpeed + angleOffset
+        local offset = Vector3.new(math.cos(angle), 0, math.sin(angle)) * orbitRadius
+        rockClone.CFrame = humanoidRootPart.CFrame * CFrame.new(offset + forwardOffset)
+
+        -- Calculate last orbit direction
+        lastOrbitDirection = (rockClone.Position - humanoidRootPart.Position).unit
+
+        wait(0.03)
+    end
+
+    return lastOrbitDirection
+end
+
+-- Function to launch the rock to the right relative to the last orbit direction
+local function launchRock(rockClone, direction)
+    local rightVector = getRightVector(direction)
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.Velocity = rightVector * launchSpeed -- Launch rock to the right of its orbit direction
+    bodyVelocity.MaxForce = Vector3.new(1e6, 1e6, 1e6) -- Large force to ensure strong movement
+    bodyVelocity.Parent = rockClone
+
+    -- Remove BodyVelocity after 0.1 seconds to let gravity take over
+    wait()
+    bodyVelocity:Destroy()
+end
+
+-- Function to set collision group for the rock
+local function setCollisionGroup(rockClone, collisionGroup)
+    PhysicsService:SetPartCollisionGroup(rockClone, collisionGroup)
+end
+
+-- Function to spawn and animate rocks
+local function spawnRocks()
+    local rocks = {} -- To store all the rock instances
+
+    for i = 1, 6 do
+        local angleOffset = (math.pi * 2 / 6) * i -- Spread rocks in a circle
+
+        -- Clone and setup the rock
+        local rockClone = floatingRockTemplate:Clone()
+        local size = math.random() * (0.6 - 0.2) + 0.2 -- Random size between 0.2 and 0.6
+        rockClone.Size = Vector3.new(size, size, size) -- Uniform size for all dimensions
+
+        -- Apply a random rotation
+        local randomRotation = CFrame.Angles(math.random() * math.pi * 2, math.random() * math.pi * 2, math.random() * math.pi * 2)
+        rockClone.CFrame = humanoidRootPart.CFrame * CFrame.new(math.cos(angleOffset) * 10, 0, math.sin(angleOffset) * 10) * randomRotation
+
+        rockClone.Parent = workspace
+
+        -- Set collision group for the rock
+        setCollisionGroup(rockClone, debrisCollisionGroup)
+
+        -- Make the rock unanchored after orbit
+        rockClone.Anchored = true
+
+        -- Add the rock to the table
+        table.insert(rocks, rockClone)
+
+        -- Make the rock orbit the player
+        spawn(function()
+            local lastDirection = orbitRock(rockClone, angleOffset)
+
+            -- After orbiting, immediately launch the rock in the right direction relative to its orbit direction
+            rockClone.Anchored = false -- Unanchor the rock so it can be launched
+            launchRock(rockClone, lastDirection)
+        end)
+    end
+
+    -- Wait for 5 seconds before starting to fade out all rocks
+    wait(fallDelay)
+    fadeOutRocks(rocks)
+end
+
+-- Call the function to spawn the rocks
+spawnRocks()
 end)
 wait(0.7)
 -- Get the player and their character
