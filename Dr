@@ -26,29 +26,6 @@ end)
             }
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
 end)
-local Original = "rbxassetid://7815618175"  -- The animation ID you're detecting
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-local detectionActive = true  -- Flag to control detection
-
--- Function to handle animation detection
-local function onAnimationPlayed(animationTrack)
-    -- Check if detection is active and the animation ID matches
-    if detectionActive and animationTrack.Animation.AnimationId == Original then
-        -- Stop the detected animation
-        animationTrack:Stop()
-
-        -- Disable further detection after 7 seconds
-        task.delay(6.6, function()
-        detectionActive = false
-        end)
-    end
-end
-
--- Connect the function to humanoid's AnimationPlayed event
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 task.spawn(function()
 local player = game.Players.LocalPlayer
 repeat wait() until player.Character.Humanoid
@@ -656,3 +633,26 @@ end)
         end
     end
 end)
+local Original = "rbxassetid://7815618175"  -- The animation ID you're detecting
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local detectionActive = true  -- Flag to control detection
+
+-- Function to handle animation detection
+local function onAnimationPlayed(animationTrack)
+    -- Check if detection is active and the animation ID matches
+    if detectionActive and animationTrack.Animation.AnimationId == Original then
+        -- Stop the detected animation
+        animationTrack:Stop()
+
+        -- Disable further detection after 7 seconds
+        task.delay(6.6, function()
+        detectionActive = false
+        end)
+    end
+end
+
+-- Connect the function to humanoid's AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
