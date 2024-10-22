@@ -1,5 +1,5 @@
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-task.delay(7, function()
+task.delay(4, function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = falselocal Original = "rbxassetid://7815618175"
 local Original = "rbxassetid://7815618175"
 local player = game.Players.LocalPlayer
@@ -13,7 +13,7 @@ local function onAnimationPlayed(animationTrack)
     if detectionActive and animationTrack.Animation.AnimationId == Original then
         -- Stop the detected animation
         animationTrack:Stop()
-        task.delay(7, function()
+        task.delay(4, function()
         detectionActive = false
     end
 end
