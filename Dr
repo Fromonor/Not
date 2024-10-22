@@ -1,3 +1,4 @@
+task.spawn(function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 task.delay(7, function()
      game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
@@ -25,6 +26,7 @@ end)
                 }
             }
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+end)
 end)
 local Original = "rbxassetid://7815618175"  -- The animation ID you're detecting
 
