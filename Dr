@@ -1,7 +1,6 @@
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-task.delay(0, function()
+wait(0)
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-end)
 local Original = "rbxassetid://7815618175"
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
