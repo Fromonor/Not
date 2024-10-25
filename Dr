@@ -5,38 +5,42 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
 -- Animation IDs
-local Anim1Id = "rbxassetid://7815618175"  -- Animation to be blocked
-local Anim2Id = "rbxassetid://16945573694" -- Second animation to play normally
-local Anim3Id = "rbxassetid://16945550029" -- Third animation to play normally
+local BlockedAnimId = "rbxassetid://7815618175"  -- Animation to be blocked
+local Anim2Id = "rbxassetid://16945573694"       -- Second animation to trigger blocking
+local Anim3Id = "rbxassetid://16945550029"       -- Third animation to trigger blocking and end it after finishing
 
-local detectionActive = true  -- Flag to control if Anim1 is allowed to play
+local detectionActive = false  -- Start with blocking inactive
 
--- Function to handle blocking Anim1
+-- Function to handle blocking BlockedAnimId
 local function onAnimationPlayed(animationTrack)
-    if detectionActive and animationTrack.Animation.AnimationId == Anim1Id then
-        animationTrack:Stop()  -- Stop Anim1 from playing
+    if detectionActive and animationTrack.Animation.AnimationId == BlockedAnimId then
+        animationTrack:Stop()  -- Prevent BlockedAnimId from playing
     end
 end
 
--- Load and play Anim2 and Anim3
+-- Load and play Anim2, which activates blocking
 local anim2 = Instance.new("Animation")
 anim2.AnimationId = Anim2Id
 local playAnim2 = humanoid:LoadAnimation(anim2)
-anim2.AnimationId = "rbxassetid://0"
-playAnim2:Play()
+anim2.AnimationId = "rbxassetid://0"  -- Reset AnimationId
 
+playAnim2:Play()
+detectionActive = true  -- Start blocking when Anim2 begins playing
+
+-- Load and play Anim3, which will stop blocking once it finishes
 local anim3 = Instance.new("Animation")
 anim3.AnimationId = Anim3Id
 local playAnim3 = humanoid:LoadAnimation(anim3)
-anim3.AnimationId = "rbxassetid://0"
+anim3.AnimationId = "rbxassetid://0"  -- Reset AnimationId
+
 playAnim3.Stopped:Connect(function()
-detectionActive = false
+    detectionActive = false  -- Stop blocking BlockedAnimId when Anim3 finishes
 end)
-wait(0.8)
+task.delay(0.8, function()
 playAnim3:Play()
+end)
 
-
--- Connect the onAnimationPlayed function to block Anim1 when needed
+-- Connect the blocking function to prevent BlockedAnimId from playing when detectionActive is true
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 end)
 task.spawn(function()
