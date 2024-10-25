@@ -1,5 +1,6 @@
 task.spawn(function()
 task.spawn(function()
+task.spawn(function()
 local s = tick()
 while tick() - s < 7 do
 local args = {
@@ -12,6 +13,7 @@ local args = {
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
 wait(0.1)
 end
+end)
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
