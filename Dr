@@ -1,50 +1,4 @@
-game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-wait(0)
-game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-local Original = "rbxassetid://7815618175"
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-local detectionActive = true  -- Flag to control detection
-
--- Function to handle animation detection
-local function onAnimationPlayed(animationTrack)
-    -- Check if detection is active and the animation ID matches
-    if detectionActive and animationTrack.Animation.AnimationId == Original then
-        -- Stop the detected animation
-        animationTrack:Stop()
-        task.delay(4, function()
-        detectionActive = false
-        end)
-    end
-end
-
--- Connect the function to humanoid's AnimationPlayed event
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 task.spawn(function()
-local s = tick()
-while tick() - s < 7 do
-local args = {
-                [1] = {
-                    ["setting"] = "S_ShiftLock",
-                    ["Goal"] = "Adjust Setting",
-                    ["set"] = false
-                }
-            }
-            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-wait(0.1)
-end
-            task.delay(7, function()
-                    local args = {
-                [1] = {
-                    ["setting"] = "S_ShiftLock",
-                    ["Goal"] = "Adjust Setting",
-                    ["set"] = true
-                }
-            }
-            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-end)
-end)
 task.spawn(function()
 local player = game.Players.LocalPlayer
 repeat wait() until player.Character.Humanoid
@@ -651,4 +605,53 @@ end)
             child:Emit(20)
         end
     end
+end)
+end)
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+task.delay(7, function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+end)
+local Original = "rbxassetid://7815618175"
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local detectionActive = true  -- Flag to control detection
+
+-- Function to handle animation detection
+local function onAnimationPlayed(animationTrack)
+    -- Check if detection is active and the animation ID matches
+    if detectionActive and animationTrack.Animation.AnimationId == Original then
+        -- Stop the detected animation
+        animationTrack:Stop()
+        task.delay(7, function()
+        detectionActive = false
+        end)
+    end
+end
+
+-- Connect the function to humanoid's AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+task.spawn(function()
+local s = tick()
+while tick() - s < 7 do
+local args = {
+                [1] = {
+                    ["setting"] = "S_ShiftLock",
+                    ["Goal"] = "Adjust Setting",
+                    ["set"] = false
+                }
+            }
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+wait(0.1)
+end
+            task.delay(7, function()
+                    local args = {
+                [1] = {
+                    ["setting"] = "S_ShiftLock",
+                    ["Goal"] = "Adjust Setting",
+                    ["set"] = true
+                }
+            }
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+end)
 end)
