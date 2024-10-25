@@ -12,7 +12,6 @@ local function onAnimationPlayed(animationTrack)
     if detectionActive and animationTrack.Animation.AnimationId == Original then
         -- Stop the detected animation
         animationTrack:Stop()
-        end)
     end
 end
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
