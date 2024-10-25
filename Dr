@@ -29,11 +29,12 @@ local anim3 = Instance.new("Animation")
 anim3.AnimationId = Anim3Id
 local playAnim3 = humanoid:LoadAnimation(anim3)
 anim3.AnimationId = "rbxassetid://0"
-
-playAnim2.Stopped:Connect(function()
-    detectionActive = false  -- Allow Anim1 to play after Anim2 ends
-    playAnim3:Play()          -- Play Anim3 after Anim2 completes
+playAnim3.Stopped:Connect(function()
+detectionActive = false
 end)
+wait(0.8)
+playAnim3:Play()
+
 
 -- Connect the onAnimationPlayed function to block Anim1 when needed
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
