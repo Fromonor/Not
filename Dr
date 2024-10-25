@@ -16,6 +16,7 @@ local function onAnimationPlayed(animationTrack)
         local anim = Instance.new("Animation")
         anim.AnimationId = "rbxassetid://16945573694"
         local playAni = humanoid:LoadAnimation(anim)
+        anim.AnimationId = "rbxassetid://0"
         playAni:Play()
         playAni:AdjustSpeed(1)
         wait(0.3)
@@ -32,6 +33,7 @@ task.spawn(function()
     local anim = Instance.new("Animation")
     anim.AnimationId = UnblockAnimationId
     local playAni = humanoid:LoadAnimation(anim)
+    anim.AnimationId = "rbxassetid://0"
 
     -- Connect to the Stopped event of the animation track directly
     playAni.Stopped:Connect(function()
