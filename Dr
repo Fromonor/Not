@@ -1,6 +1,5 @@
 task.spawn(function()
 task.spawn(function()
-task.spawn(function()
 local s = tick()
 while tick() - s < 7 do
 local args = {
