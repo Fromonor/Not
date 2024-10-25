@@ -14,7 +14,6 @@ local function onAnimationPlayed(animationTrack)
         animationTrack:Stop()
     end
 end
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 local player = game.Players.LocalPlayer
 repeat wait() until player.Character.Humanoid
 local humanoid = player.Character.Humanoid
@@ -62,6 +61,7 @@ end)
 wait(0.8)
 playAni:Play()
 end)
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 task.spawn(function()
 local soundId = "rbxassetid://16945495411"
 
