@@ -1,5 +1,18 @@
 task.spawn(function()
 task.spawn(function()
+task.spawn(function()
+local s = tick()
+while tick() - s < 7 do
+local args = {
+                [1] = {
+                    ["setting"] = "S_ShiftLock",
+                    ["Goal"] = "Adjust Setting",
+                    ["set"] = false
+                }
+            }
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
+wait(0.1)
+end
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
@@ -34,7 +47,15 @@ local playAnim3 = humanoid:LoadAnimation(anim3)
 anim3.AnimationId = "rbxassetid://0"  -- Reset AnimationId
 
 playAnim3.Stopped:Connect(function()
-    detectionActive = false  -- Stop blocking BlockedAnimId when Anim3 finishes
+    detectionActive = false
+    local args = {
+                [1] = {
+                    ["setting"] = "S_ShiftLock",
+                    ["Goal"] = "Adjust Setting",
+                    ["set"] = true
+                }
+            }
+            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
 end)
 task.delay(0.8, function()
 playAnim3:Play()
@@ -597,28 +618,4 @@ end)
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 task.delay(6.7, function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-end)
-task.spawn(function()
-local s = tick()
-while tick() - s < 7 do
-local args = {
-                [1] = {
-                    ["setting"] = "S_ShiftLock",
-                    ["Goal"] = "Adjust Setting",
-                    ["set"] = false
-                }
-            }
-            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-wait(0.1)
-end
-            task.delay(0.01, function()
-                    local args = {
-                [1] = {
-                    ["setting"] = "S_ShiftLock",
-                    ["Goal"] = "Adjust Setting",
-                    ["set"] = true
-                }
-            }
-            game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
-end)
 end)
