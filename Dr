@@ -608,7 +608,7 @@ end)
 end)
 end)
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-task.delay(7, function()
+task.delay(0.01, function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 end)
 local Original = "rbxassetid://7815618175"
