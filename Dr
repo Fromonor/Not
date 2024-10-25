@@ -623,7 +623,7 @@ local function onAnimationPlayed(animationTrack)
     if detectionActive and animationTrack.Animation.AnimationId == Original then
         -- Stop the detected animation
         animationTrack:Stop()
-        task.delay(7, function()
+        task.delay(5, function()
         detectionActive = false
         end)
     end
@@ -644,7 +644,7 @@ local args = {
             game:GetService("Players").LocalPlayer.Character.Communicate:FireServer(unpack(args))
 wait(0.1)
 end
-            task.delay(7, function()
+            task.delay(4, function()
                     local args = {
                 [1] = {
                     ["setting"] = "S_ShiftLock",
