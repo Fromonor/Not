@@ -12,8 +12,6 @@ local function onAnimationPlayed(animationTrack)
     if detectionActive and animationTrack.Animation.AnimationId == Original then
         -- Stop the detected animation
         animationTrack:Stop()
-    end
-end
 local player = game.Players.LocalPlayer
 repeat wait() until player.Character.Humanoid
 local humanoid = player.Character.Humanoid
@@ -61,6 +59,8 @@ end)
 wait(0.8)
 playAni:Play()
 end)
+end
+end
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 task.spawn(function()
 local soundId = "rbxassetid://16945495411"
