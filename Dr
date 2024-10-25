@@ -32,6 +32,12 @@ local function onAnimationPlayed(animationTrack)
     end
 end
 
+for _, track in ipairs(humanoid:GetPlayingAnimationTracks()) do
+    if track.Animation.AnimationId == BlockedAnimId then
+        track:Stop()  -- Stop any instances of BlockedAnimId
+    end
+end
+
 -- Load and play Anim2, which activates blocking
 local anim2 = Instance.new("Animation")
 anim2.AnimationId = Anim2Id
