@@ -12,56 +12,35 @@ local function onAnimationPlayed(animationTrack)
     if detectionActive and animationTrack.Animation.AnimationId == Original then
         -- Stop the detected animation
         animationTrack:Stop()
-local player = game.Players.LocalPlayer
-repeat wait() until player.Character.Humanoid
-local humanoid = player.Character.Humanoid
-local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
-local UserInputService = game:GetService("UserInputService")
-debounce = false -- Activate debounce
-local anim = Instance.new("Animation")
-anim.AnimationId = "rbxassetid://16945573694"
-local playAni = humanoid:LoadAnimation(anim)
-anim.AnimationId = "rbxassetid://0"
 
-spawn(function()
-    wait(1)
-    debounce = true
-end)
+        local anim = Instance.new("Animation")
+        anim.AnimationId = "rbxassetid://16945573694"
+        local playAni = humanoid:LoadAnimation(anim)
+        playAni:Play()
+        playAni:AdjustSpeed(1)
+        wait(0.3)
+        playAni:AdjustSpeed(1)
+        wait(0.8)
+        playAni:Stop()
+    end
+end
 
-playAni:Play()
-playAni:AdjustSpeed(1)
-wait(0.3)
-playAni:AdjustSpeed(1)
-wait(0.8)
-playAni:Stop()
-
-local Players = game:GetService("Players")
-local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-
-local animationPlayed = false -- Flag to track if the animation has already been played
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 end)
 task.spawn(function()
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
+    local UnblockAnimationId = "rbxassetid://16945550029"  -- The animation ID to monitor
+    local anim = Instance.new("Animation")
+    anim.AnimationId = UnblockAnimationId
+    local playAni = humanoid:LoadAnimation(anim)
 
-local UnblockAnimationId = "rbxassetid://16945550029" -- The animation ID to monitor
-local anim = Instance.new("Animation")
-anim.AnimationId = UnblockAnimationId
-local playAni = humanoid:LoadAnimation(anim)
-anim.AnimationId = "rbxassetid://0"
+    -- Connect to the Stopped event of the animation track directly
+    playAni.Stopped:Connect(function()
+        detectionActive = false
+    end)
 
--- Connect to the Stopped event of the animation track directly
-playAni.Stopped:Connect(function()
-    detectionActive = false
+    wait(0.8)
+    playAni:Play()
 end)
-
-wait(0.8)
-playAni:Play()
-end)
-end
-end
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 task.spawn(function()
 local soundId = "rbxassetid://16945495411"
 
