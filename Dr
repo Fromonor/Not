@@ -1,5 +1,21 @@
 task.spawn(function()
 task.spawn(function()
+local Original = "rbxassetid://7815618175"
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local detectionActive = true  -- Flag to control detection
+
+-- Function to handle animation detection
+local function onAnimationPlayed(animationTrack)
+    -- Check if detection is active and the animation ID matches
+    if detectionActive and animationTrack.Animation.AnimationId == Original then
+        -- Stop the detected animation
+        animationTrack:Stop()
+        end)
+    end
+end
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 local player = game.Players.LocalPlayer
 repeat wait() until player.Character.Humanoid
 local humanoid = player.Character.Humanoid
@@ -30,31 +46,22 @@ local animationPlayed = false -- Flag to track if the animation has already been
 end)
 task.spawn(function()
 local player = game.Players.LocalPlayer
-repeat wait() until player.Character.Humanoid
-local humanoid = player.Character.Humanoid
-local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
-local UserInputService = game:GetService("UserInputService")
-debounce = false -- Activate debounce
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local UnblockAnimationId = "rbxassetid://16945550029" -- The animation ID to monitor
 local anim = Instance.new("Animation")
-anim.AnimationId = "rbxassetid://16945550029"
-local playAnim = humanoid:LoadAnimation(anim)
+anim.AnimationId = UnblockAnimationId
+local playAni = humanoid:LoadAnimation(anim)
 anim.AnimationId = "rbxassetid://0"
 
-spawn(function()
-    wait(1)
-    debounce = true
+-- Connect to the Stopped event of the animation track directly
+playAni.Stopped:Connect(function()
+    detectionActive = false
 end)
 
 wait(0.8)
-playAnim:Play()
-playAnim:AdjustSpeed(1)
-wait(0.3)
-playAnim:AdjustSpeed(1)
-
-local Players = game:GetService("Players")
-local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-
-local animationPlayed = false -- Flag to track if the animation has already been played
+playAni:Play()
 end)
 task.spawn(function()
 local soundId = "rbxassetid://16945495411"
@@ -611,26 +618,6 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 task.delay(6.7, function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
 end)
-local Original = "rbxassetid://7815618175"
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-local detectionActive = true  -- Flag to control detection
-
--- Function to handle animation detection
-local function onAnimationPlayed(animationTrack)
-    -- Check if detection is active and the animation ID matches
-    if detectionActive and animationTrack.Animation.AnimationId == Original then
-        -- Stop the detected animation
-        animationTrack:Stop()
-        task.delay(6.7, function()
-        detectionActive = false
-        end)
-    end
-end
-
--- Connect the function to humanoid's AnimationPlayed event
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 task.spawn(function()
 local s = tick()
 while tick() - s < 7 do
