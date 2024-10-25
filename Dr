@@ -1,47 +1,42 @@
 task.spawn(function()
 task.spawn(function()
-local Original = "rbxassetid://7815618175"
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
-local detectionActive = true  -- Flag to control detection
 
--- Function to handle animation detection
+-- Animation IDs
+local Anim1Id = "rbxassetid://7815618175"  -- Animation to be blocked
+local Anim2Id = "rbxassetid://16945573694" -- Second animation to play normally
+local Anim3Id = "rbxassetid://16945550029" -- Third animation to play normally
+
+local detectionActive = true  -- Flag to control if Anim1 is allowed to play
+
+-- Function to handle blocking Anim1
 local function onAnimationPlayed(animationTrack)
-    -- Check if detection is active and the animation ID matches
-    if detectionActive and animationTrack.Animation.AnimationId == Original then
-        -- Stop the detected animation
-        animationTrack:Stop()
-
-        local anim = Instance.new("Animation")
-        anim.AnimationId = "rbxassetid://16945573694"
-        local playAni = humanoid:LoadAnimation(anim)
-        anim.AnimationId = "rbxassetid://0"
-        playAni:Play()
-        playAni:AdjustSpeed(1)
-        wait(0.3)
-        playAni:AdjustSpeed(1)
-        wait(0.8)
-        playAni:Stop()
+    if detectionActive and animationTrack.Animation.AnimationId == Anim1Id then
+        animationTrack:Stop()  -- Stop Anim1 from playing
     end
 end
 
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+-- Load and play Anim2 and Anim3
+local anim2 = Instance.new("Animation")
+anim2.AnimationId = Anim2Id
+local playAnim2 = humanoid:LoadAnimation(anim2)
+anim2.AnimationId = "rbxassetid://0"
+playAnim2:Play()
+
+local anim3 = Instance.new("Animation")
+anim3.AnimationId = Anim3Id
+local playAnim3 = humanoid:LoadAnimation(anim3)
+anim3.AnimationId = "rbxassetid://0"
+
+playAnim2.Stopped:Connect(function()
+    detectionActive = false  -- Allow Anim1 to play after Anim2 ends
+    playAnim3:Play()          -- Play Anim3 after Anim2 completes
 end)
-task.spawn(function()
-    local UnblockAnimationId = "rbxassetid://16945550029"  -- The animation ID to monitor
-    local anim = Instance.new("Animation")
-    anim.AnimationId = UnblockAnimationId
-    local playAni = humanoid:LoadAnimation(anim)
-    anim.AnimationId = "rbxassetid://0"
 
-    -- Connect to the Stopped event of the animation track directly
-    playAni.Stopped:Connect(function()
-        detectionActive = false
-    end)
-
-    wait(0.8)
-    playAni:Play()
+-- Connect the onAnimationPlayed function to block Anim1 when needed
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 end)
 task.spawn(function()
 local soundId = "rbxassetid://16945495411"
